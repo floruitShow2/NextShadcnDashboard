@@ -1,8 +1,10 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { PersonStandingIcon } from 'lucide-react'
 import * as z from 'zod'
+import Cookies from 'js-cookie'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,7 +15,15 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
@@ -22,6 +32,7 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,7 +42,13 @@ export default function LoginPage() {
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      Cookies.set('auth-token', JSON.stringify(values), { domain: 'localhost', expires: 15 })
+      router.push('/news')
+
+    } catch (error) {
+      console.warn('something went wrong', error)
+    }
   }
 
   return (
@@ -44,7 +61,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className='flex flex-col gap-y-4' onSubmit={form.handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-y-4" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="email"
@@ -52,10 +69,7 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="chengminglong@digital-engine.com"
-                        {...field}
-                      ></Input>
+                      <Input placeholder="chengminglong@digital-engine.com" {...field}></Input>
                     </FormControl>
                     <FormDescription>
                       This is the email address you signed up to SupportMe Dashboard
@@ -72,11 +86,7 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
-                        type='password'
-                        placeholder="Password"
-                        {...field}
-                      ></Input>
+                      <Input type="password" placeholder="Password" {...field}></Input>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
