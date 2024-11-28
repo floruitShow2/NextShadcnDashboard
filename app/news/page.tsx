@@ -2,9 +2,10 @@
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import type { NewsProps } from './index.interface'
 
 export default function News() {
-  const [list, setList] = useState<any[]>([])
+  const [list, setList] = useState<NewsProps[]>([])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -36,7 +37,7 @@ export default function News() {
     <>
       <ul>
         {list.map((item) => (
-          <Link key={item.id} href={pathname + '/detail' + '?' + createQueryString('id', item.id)}>
+          <Link key={item.id} href={pathname + '/detail' + '?' + createQueryString('id', item.id.toString())}>
             <p>{item.content}</p>
           </Link>
         ))}
