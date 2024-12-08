@@ -37,7 +37,10 @@ export default function News() {
     <>
       <ul>
         {list.map((item) => (
-          <Link key={item.id} href={pathname + '/detail' + '?' + createQueryString('id', item.id.toString())}>
+          <Link
+            key={item.id}
+            href={pathname + '/detail' + '?' + createQueryString('id', item.id.toString())}
+          >
             <p>{item.content}</p>
           </Link>
         ))}

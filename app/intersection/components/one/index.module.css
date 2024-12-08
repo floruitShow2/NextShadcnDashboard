@@ -1,0 +1,9 @@
+.name {
+  margin-top: 0;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 1500ms ease-in 0.2s;
+}
+.name[data-visible='true'] {
+  opacity: 1;
+}

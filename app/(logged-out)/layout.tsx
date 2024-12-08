@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { ThemeToggle } from '@/components/ui/themeToggle'
+import { ThemeToggle } from '@/components/themeToggle'
 
 interface LogoutProps {
   children?: React.ReactNode

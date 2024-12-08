@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { MoonIcon, SunIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 import type { ThemeToggleProps } from './index.interface'
 
 export function ThemeToggle(props: ThemeToggleProps) {

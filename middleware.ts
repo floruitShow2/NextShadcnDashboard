@@ -8,7 +8,6 @@ const publicRoutes = ['/login', '/sign-up']
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  console.log(request)
   console.log('cookie', request.cookies)
   const { pathname } = request.nextUrl
 
@@ -16,11 +15,11 @@ export function middleware(request: NextRequest) {
 
   console.log('auth token', token)
 
-  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route))
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
 
   if (isPublicRoute && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    return NextResponse.redirect(new URL('/', request.url))
   }
 
   if (isProtectedRoute && !token) {
@@ -38,7 +37,7 @@ export function middleware(request: NextRequest) {
         response.cookies.delete('auth-token')
         return response
       }
-    } catch(err) {
+    } catch (err) {
       console.error('Token verification failed:', err)
       const response = NextResponse.redirect(new URL('/login', request.url))
       response.cookies.delete('auth-token')
@@ -51,7 +50,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)'
-  ]
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 }

@@ -45,7 +45,6 @@ export default function LoginPage() {
     try {
       Cookies.set('auth-token', JSON.stringify(values), { domain: 'localhost', expires: 15 })
       router.push('/news')
-
     } catch (error) {
       console.warn('something went wrong', error)
     }
